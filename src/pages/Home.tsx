@@ -11,14 +11,15 @@ export const Home = () => {
 
     const navigate = useNavigate();
 
-
-    const showBrowserNotification = () => {
-        // Crear y mostrar la notificación del navegador
-        new Notification('ProfiTok', {
-            body: 'You received $14.24 for watching and rating a video!',
-            icon: 'minilogo.png',
-            // image: 'minilogo.png',
-        });
+    const sendNotification = () => {
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification('ProfiTok', {
+                    body: 'You received $14.24 for watching and rating a video!',
+                    icon: 'images/minilogo.png'
+                });
+            });
+        }
     };
 
     const clickPlay = () => {
@@ -44,25 +45,25 @@ export const Home = () => {
         setTimeout(() => {
             setAmount(Number((amount + 14.24).toFixed(2)));
             navigate('/evaluation');
-            showBrowserNotification();
+            sendNotification();
         }, 1000);
     };
 
     return (
         <>
             <main className="h-[700px] w-full relative flex justify-center items-center" onClick={clickPlay}>
-                <video ref={videoRef} src="/video1.mp4" className="object-cover h-full w-full rounded-lg"></video>
+                <video ref={videoRef} src="videos/video1.mp4" className="object-cover h-full w-full rounded-lg"></video>
 
                 {!isPlaying && (
                     <div className="absolute w-20 h-24 flex justify-center items-center">
-                        <img src="play.png" alt="play" className="w-full h-full" />
+                        <img src="images/play.png" alt="play" className="w-full h-full" />
                     </div>
                 )}
             </main>
 
             <section className="bg-white pr-2 rounded-lg border border-slate-300 flex justify-between items-center py-2">
                 <div className="flex gap-1 items-center">
-                    <img src="/minilogo.png" alt="logo" className="h-[40px] w-[55px]" />
+                    <img src="images/minilogo.png" alt="logo" className="h-[40px] w-[55px]" />
 
                     <div className="flex flex-col">
                         <p className="text-lg font-bold text-neutral-800">lifeisbeautiful4044</p>

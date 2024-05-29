@@ -15,19 +15,19 @@ export const Root = () => {
   }, []);
 
   return (
-    <main className="fixed w-full z-10" style={{ height: window.innerHeight }}>
-      <div className="w-full md:w-[430px] mx-auto h-full overflow-auto bg-image">
-        <section className="bg-black bg-opacity-15 h-full overflow-auto py-5 px-2 flex flex-col gap-5 w-full">
-          <header className="h-16 bg-white flex rounded-lg border border-neutral-300 items-center justify-between">
-            <img src="/minilogo.png" alt="logo" className="h-[50px] w-[62px]" />
+    <main className="fixed w-full z-10 flex justify-center" style={{ height: `${window.innerHeight}px` }}>
+      <div className="h-full overflow-auto bg-image flex flex-col w-full md:w-[430px]">
+        <header className="h-16 bg-white flex rounded-lg border border-neutral-300 items-center justify-between mx-4 my-2">
+          <img src="images/minilogo.png" alt="logo" className="h-[50px] w-[62px]" />
 
-            <div className="bg-red-600 w-32 h-10 rounded-lg mr-4 flex justify-center items-center">
-              <span className="text-white font-bold text-lg">$ {amount}</span>
-            </div>
-          </header>
+          <div className="bg-red-600 w-32 h-10 rounded-lg mr-4 flex justify-center items-center">
+            <span className="text-white font-bold text-lg">$ {amount}</span>
+          </div>
+        </header>
 
+        <div className="flex flex-col gap-5 h-full overflow-auto px-4 py-2">
           <Outlet context={[amount, setAmount]} />
-        </section>
+        </div>
       </div>
     </main>
   );

@@ -22,14 +22,16 @@ export const Withdrawal = () => {
 
     };
 
-    const showBrowserNotification = () => {
-        // Crear y mostrar la notificación del navegador
-        new Notification('PayPal', {
-            body: `You have received a transfer of $${amount}`,
-            icon: 'paypalmini.png',
-            // image: 'minilogo.png',
-        });
-
+    const sendNotification = () => {
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification('PayPal', {
+                    body: `You have received a transfer of $${amount}`,
+                    icon: 'images/paypalmini.png'
+                });
+            });
+        }
+        
         setAmount(0);
     };
 
@@ -40,7 +42,7 @@ export const Withdrawal = () => {
     useEffect(() => {
         if (percentage >= 100) {
             clearInterval(intervalId);
-            showBrowserNotification();
+            sendNotification();
             setTimeout(() => setMode('balance'), 1000);
         }
     }, [percentage]);
